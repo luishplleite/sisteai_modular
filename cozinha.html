@@ -1034,9 +1034,10 @@ function getOrderDisplayType(order) {
 async function loadSecureConfig() {
     try {
         const hostname = window.location.hostname;
-        const backendUrl = (hostname !== 'localhost' && hostname !== '127.0.0.1')
-            ? `https://api.${hostname}`
-            : 'http://localhost:3001'; // Default for local development
+        // Define a URL do backend - sempre usar a porta 5000 no Replit
+        const backendUrl = window.location.origin.includes('replit') 
+            ? window.location.origin.replace(/:\d+/, ':5000')
+            : 'http://localhost:5000';
 
         const response = await fetch(`${backendUrl}/config`).catch(() => {
             throw new Error("Erro de rede ou o servidor de backend está offline.");
